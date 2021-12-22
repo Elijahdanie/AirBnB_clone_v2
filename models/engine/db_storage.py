@@ -6,12 +6,9 @@ import os
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.scoping import scoped_session
 from sqlalchemy import create_engine
-from sqlalchemy.sql.schema import FetchedValue
 import models
-from models.amenity import Amenity
-from models.place import Place
 
-# mapped each models to a dict key
+# Base
 Base = models.base_model.Base
 
 # environs and options
@@ -34,6 +31,8 @@ class DBStorage:
     """
     __engine = None
     __session = None
+
+    # mapped each models to a dict key
     models = {
     'Amenity': models.amenity.Amenity,
     'City': models.city.City,
