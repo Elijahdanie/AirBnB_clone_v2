@@ -60,78 +60,78 @@ class DBStorage:
         except KeyError:
             pass
 
-        def all(self, cls=None):
-            """retrieves all object instance
+    def all(self, cls=None):
+        """retrieves all object instance
 
-            Args:
-                cls ([class.BaseModel], optional): [BaseModel model]. Defaults to None.
+        Args:
+            cls ([class.BaseModel], optional): [BaseModel model]. Defaults to None.
 
-            Returns:
-                [dict]: Returns a dictionary of instances
-            """
-            objects = {}
+        Returns:
+            [dict]: Returns a dictionary of instances
+        """
+        objects = {}
 
-            if cls is not None:
-                # fetch a specific object instance
-                if cls not in self.models.keys():
-                    return
-                for instance in self.__session.query(self.models[cls]):
+        if cls is not None:
+            # fetch a specific object instance
+            if cls not in self.models.keys():
+                return
+            for instance in self.__session.query(self.models[cls]):
+                objects[instance.id] = instance
+
+        else:
+            # fetch all object instances instead
+            for cls_name in self.models.keys():
+                for instance in self.__session.query(models[cls_name]):
                     objects[instance.id] = instance
 
-            else:
-                # fetch all object instances instead
-                for cls_name in self.models.keys():
-                    for instance in self.__session.query(models[cls_name]):
-                        objects[instance.id] = instance
+        return objects
 
-            return objects
+    def new(self, obj):
+        """adds a new object to the current database session
 
-        def new(self, obj):
-            """adds a new object to the current database session
+        Args:
+            obj (class.BaseModel): [description]
+        """
+        self.__session.add(obj)
 
-            Args:
-                obj (class.BaseModel): [description]
-            """
-            self.__session.add(obj)
+    def save(self):
+        """commits the new objects to the current database session 
+        """
+        try:
+            # try commiting
+            self.__session.commit()
+        except Exception:
+            # if an exception occurs rollback the commit
+            self.__session.rollback()
+            raise
+        finally:
+            # end the database session
+            self.__session.close()
 
-        def save(self):
-            """commits the new objects to the current database session 
-            """
-            try:
-                # try commiting
-                self.__session.commit()
-            except Exception:
-                # if an exception occurs rollback the commit
-                self.__session.rollback()
-                raise
-            finally:
-                # end the database session
-                self.__session.close()
+    
+    def delete(self, obj=None):
+        """deletes a table from the database
 
+        Args:
+            obj (database table name, optional): [description]. Defaults to None.
+        """
+        if obj is None:
+            return
+
+        try:
+            self.__session.delete(obj)
+        except Exception:
+            raise 
         
-        def delete(self, obj=None):
-            """deletes a table from the database
 
-            Args:
-                obj (database table name, optional): [description]. Defaults to None.
-            """
-            if obj is None:
-                return
+    def reload(self):
+        """reloads all a objects from the database
+        """
+        Amenity = models['Amenity']
+        City = models['City']
+        User = models['User']
+        Place = models['Place']
+        State = models['State']
 
-            try:
-                self.__session.delete(obj)
-            except Exception:
-                raise 
-            
-
-        def reload(self):
-            """reloads all a objects from the database
-            """
-            Amenity = models['Amenity']
-            City = models['City']
-            User = models['User']
-            Place = models['Place']
-            State = models['State']
-
-            Base.metadata.create_all(self.__engine)
-            self.__session = scoped_session(sessionmaker(bind=self.__engine, expire_on_commit=False))
+        Base.metadata.create_all(self.__engine)
+        self.__session = scoped_session(sessionmaker(bind=self.__engine, expire_on_commit=False))
