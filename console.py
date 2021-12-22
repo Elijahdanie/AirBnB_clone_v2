@@ -132,6 +132,7 @@ class HBNBCommand(cmd.Cmd):
                 if typecheck is str:
                     v = str(v[1:-1])
                     v = v.replace('_', ' ')
+                    v = v.replace('"', '\"')
                     final_parseArgs[k] = v
         return final_parseArgs
 
