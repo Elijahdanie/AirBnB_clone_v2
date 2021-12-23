@@ -131,7 +131,7 @@ class DBStorage:
         City = self.models['City']
         User = self.models['User']
         Place = self.models['Place']
-        State = self.models['State']
+        State = self.=models['State']
 
         Base.metadata.create_all(self.__engine)
         self.__session = scoped_session(sessionmaker(bind=self.__engine, expire_on_commit=False))
