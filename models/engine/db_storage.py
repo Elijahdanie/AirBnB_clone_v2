@@ -81,7 +81,7 @@ class DBStorage:
         else:
             # fetch all object instances instead
             for cls_name in self.models.keys():
-                for instance in self.__session.query(models[cls_name]):
+                for instance in self.__session.query(self.models[cls_name]):
                     objects[instance.id] = instance
 
         return objects
@@ -127,11 +127,11 @@ class DBStorage:
     def reload(self):
         """reloads all a objects from the database
         """
-        Amenity = models['Amenity']
-        City = models['City']
-        User = models['User']
-        Place = models['Place']
-        State = models['State']
+        Amenity = self.models['Amenity']
+        City = self.models['City']
+        User = self.models['User']
+        Place = self.models['Place']
+        State = self.models['State']
 
         Base.metadata.create_all(self.__engine)
         self.__session = scoped_session(sessionmaker(bind=self.__engine, expire_on_commit=False))
