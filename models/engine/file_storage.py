@@ -42,7 +42,7 @@ class FileStorage:
             uid = obj.__class__.__name__ + '.' + obj.id
             FileStorage.__objects.pop(uid)
         else:
-            FileStorage.__objects.clear()
+            pass
 
 
     def save(self):
