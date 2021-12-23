@@ -19,18 +19,6 @@ class FileStorage:
                  if val.__class__.__name__ == cls.__name__:
                      final_list[key] = val
              return final_list
-    
-    # def all(self, cls=None):
-    #     if cls is None:
-    #         return FileStorage.__objects
-
-    #     storage = {}
-    #     for obj_id in FileStorage.__objects:
-    #         obj_cls = FileStorage.__objects[obj_id].__class__.__name__
-    #         if cls == obj_cls:
-    #             storage[obj_id] = FileStorage.__objects[obj_id]
-
-    #     return storage
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
