@@ -38,7 +38,7 @@ class FileStorage:
 
     def delete(self, obj=None):
         """Deletes object from storage dictionary"""
-        if obj is not None:
+        if obj != None:
             uid = obj.__class__.__name__ + '.' + obj.id
             FileStorage.__objects.pop(uid)
         else:
