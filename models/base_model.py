@@ -27,16 +27,13 @@ class BaseModel:
 
         if not kwargs:
             from models import storage
-            self.id = Column(String(60), primary_key=True, nullable=False)
-            self.created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
-            self.updated_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
         else:
-            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
             del kwargs['__class__']
-            self.__dict__.update(kwargs)
+            for k, v in kwargs.items():
+                setattr(self, k, v)
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -52,14 +49,13 @@ class BaseModel:
 
     def to_dict(self):
         """Convert instance into dict format"""
-        dictionary = {}
-        dictionary.update(self.__dict__)
-        dictionary.update({'__class__':
-                          (str(type(self)).split('.')[-1]).split('\'')[0]})
-
-        dictionary['created_at'] = self.created_at.isoformat()
-        dictionary['updated_at'] = self.updated_at.isoformat()
-        return dictionary
+        dupe = self.__dict__.copy()
+        dupe["created_at"] = str(dupe["created_at"])
+        dupe["updated_at"] = str(dupe["updated_at"])
+        dupe["__class__"] = type(self).__name__
+        if ("_sa_instance_state" in dupe):
+            dupe.pop("_sa_instance_state", 0)
+        return dupe
 
     def delete(self):
         from models import storage
