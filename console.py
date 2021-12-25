@@ -112,7 +112,7 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """ Overrides the emptyline method of CMD """
         pass
-    
+
     def ExtractArgs(args):
         """ This method extracts
         keyword arguments like name="Holberton"
@@ -228,7 +228,7 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
         print_list = []
-        objects = storage.all() # access all method of storage
+        objects = storage.all()  # access all method of storage
 
         if args:
             args = args.split(' ')[0]  # remove possible trailing args
@@ -349,6 +349,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

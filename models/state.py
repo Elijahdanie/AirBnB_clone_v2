@@ -6,7 +6,7 @@ from models.base_model import (
     Base
 )
 from sqlalchemy import (
-    Column, 
+    Column,
     String
 )
 from sqlalchemy.orm import (
@@ -14,6 +14,7 @@ from sqlalchemy.orm import (
     backref
 )
 from os import getenv
+
 
 class State(BaseModel, Base):
     __tablename__ = "states"

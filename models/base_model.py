@@ -11,10 +11,10 @@ import uuid
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DateTime, Integer
-
 from sqlalchemy.sql.expression import delete
-
 Base = declarative_base()
+
+
 class BaseModel:
     """A base class for all hbnb models"""
     id = Column(String(60), nullable=False, primary_key=True)
@@ -23,7 +23,6 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
-
 
         if not kwargs:
             from models import storage
