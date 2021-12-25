@@ -228,7 +228,7 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
         print_list = []
-        objects = storage.all()
+        objects = storage.all() # access all method of storage
 
         if args:
             args = args.split(' ')[0]  # remove possible trailing args
@@ -253,7 +253,6 @@ class HBNBCommand(cmd.Cmd):
         """Count current number of class instances"""
         count = 0
         objects = storage.all()
-        
         for k, v in objects.items():
             if args == k.split('.')[0]:
                 count += 1
@@ -351,3 +350,5 @@ class HBNBCommand(cmd.Cmd):
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
 
+if __name__ == "__main__":
+    HBNBCommand().cmdloop()

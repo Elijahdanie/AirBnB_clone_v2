@@ -1,7 +1,18 @@
 #!/usr/bin/python3
-""" State Module for HBNB project """
-from models.base_model import BaseModel
+"""
+Amenity model module
+"""
+from models.base_model import (BaseModel, Base)
+from sqlalchemy import Column, String
+from sqlalchemy.orm import relationship
 
 
-class Amenity(BaseModel):
-    name = ""
+class Amenity(BaseModel, Base):
+    """
+    Amenity model
+    """
+    __tablename__ = "amenities"
+    name = Column(String(128), nullable=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
