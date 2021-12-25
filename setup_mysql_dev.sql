@@ -3,7 +3,9 @@
 -- Write a script that prepares a MySQL server -
 -- Create db 'hbnb_dev_db' -
 CREATE DATABASE IF NOT EXISTS hbnb_dev_db;
+
 USE hbnb_dev_db;
+
 -- Add new user 'hbnb_dev' in localhost --
 -- User 'hbnb_dev' password should be 'hbnb_dev_pwd' --
 CREATE USER IF NOT EXISTS 'hbnb_dev'@'localhost'

@@ -3,6 +3,7 @@
 CREATE DATABASE IF NOT EXISTS hbnb_test_db;
 
 USE hbnb_test_db;
+
 -- Add new user 'hbnb_test' in localhost --
 -- User 'hbnb_test' password should be 'hbnb_test_pwd' --
 CREATE USER IF NOT EXISTS 'hbnb_test'@'localhost'
