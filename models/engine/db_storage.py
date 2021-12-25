@@ -6,21 +6,32 @@ import os
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.scoping import scoped_session
 from sqlalchemy import create_engine
-import models
+from models import (
+    amenity,
+    city,
+    state,
+    place,
+    review,
+    user,
+)
+from models.base_model import Base
 
-# Base
-Base = models.base_model.Base
+# try to import config if available
+try:
+    from decouple import config as get_env
+except ImportError:
+    get_env = os.environ.get
 
 # environs and options
 env = {
     # environment settings to use
-    'environment': os.environ['HBNB_ENV'],
+    'environment': get_env('HBNB_ENV'),
 
     # db connections
-    'mysql_user': os.environ['HBNB_MYSQL_USER'],
-    'mysql_passwd': os.environ['HBNB_MYSQL_PWD'],
-    'mysql_host': os.environ['HBNB_MYSQL_HOST'],
-    'mysql_db': os.environ['HBNB_MYSQL_DB'],
+    'mysql_user': get_env('HBNB_MYSQL_USER'),
+    'mysql_passwd': get_env('HBNB_MYSQL_PWD'),
+    'mysql_host': get_env('HBNB_MYSQL_HOST'),
+    'mysql_db': get_env('HBNB_MYSQL_DB'),
     'mysql_port': 3306,
 }
 
@@ -34,12 +45,12 @@ class DBStorage:
 
     # mapped each models to a dict key
     models = {
-    'Amenity': models.amenity.Amenity,
-    'City': models.city.City,
-    'User': models.user.User,
-    'Place': models.place.Place,
-    'Review': models.review.Review,
-    'State': models.state.State
+    'Amenity': amenity.Amenity,
+    'City': city.City,
+    'User': user.User,
+    'Place': place.Place,
+    'Review': review.Review,
+    'State': state.State
 }
 
     def __init__(self):
@@ -75,13 +86,13 @@ class DBStorage:
             # fetch a specific object instance
             if cls not in self.models.keys():
                 return
-            for instance in self.__session.query(self.models[cls]):
+            for instance in self.__session.query(cls):
                 objects[instance.id] = instance
 
         else:
             # fetch all object instances instead
             for cls_name in self.models.keys():
-                for instance in self.__session.query(self.models[cls_name]):
+                for instance in self.__session.query(str(cls_name)):
                     objects[instance.id] = instance
 
         return objects
@@ -131,7 +142,7 @@ class DBStorage:
         City = self.models['City']
         User = self.models['User']
         Place = self.models['Place']
-        State = self.=models['State']
+        State = self.models['State']
 
         Base.metadata.create_all(self.__engine)
         self.__session = scoped_session(sessionmaker(bind=self.__engine, expire_on_commit=False))
