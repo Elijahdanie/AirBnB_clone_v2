@@ -86,13 +86,13 @@ class DBStorage:
             # fetch a specific object instance
             if cls not in self.models.keys():
                 return
-            for instance in self.__session.query(cls):
+            for instance in self.__session.query(cls).all():
                 objects[instance.id] = instance
 
         else:
             # fetch all object instances instead
             for cls_name in self.models.keys():
-                for instance in self.__session.query(str(cls_name)):
+                for instance in self.__session.query(cls_name).all():
                     objects[instance.id] = instance
 
         return objects
