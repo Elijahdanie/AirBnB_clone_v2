@@ -2,12 +2,10 @@ import unittest
 import os.path
 import os
 from datetime import datetime
-from models.engine.db_storage import DBStorage
-from models.amenity import Amenity
+import models
 from console import HBNBCommand
-
-
-
+from models.amenity import Amenity       
+        
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE', '') != "db", "db")
 class Test_DBStorage(unittest.TestCase):
     """
@@ -16,7 +14,8 @@ class Test_DBStorage(unittest.TestCase):
 
     def setUp(self):
         self.cli = HBNBCommand()
-        self.store = DBStorage()
+        self.store = models.storage
+
 
         test_args = {'updated_at': datetime(2017, 2, 12, 00, 31, 53, 331997),
                      'id': 'f519fb40-1f5c-458b-945c-2ee8eaaf4900',
