@@ -10,15 +10,15 @@ class FileStorage:
     __objects = {}
 
     def all(self, cls=None):
-         """Returns a dictionary of models currently in storage"""
-         if cls is None:
-             return FileStorage.__objects
-         else:
-             final_list = {}
-             for key, val in FileStorage.__objects.items():
-                 if val.__class__.__name__ == cls.__name__:
-                     final_list[key] = val
-             return final_list
+        """Returns a dictionary of models currently in storage"""
+        if cls is None:
+            return FileStorage.__objects
+        else:
+            final_list = {}
+            for key, val in FileStorage.__objects.items():
+                if val.__class__.__name__ == cls.__name__:
+                    final_list[key] = val
+            return final_list
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -26,12 +26,11 @@ class FileStorage:
 
     def delete(self, obj=None):
         """Deletes object from storage dictionary"""
-        if obj != None:
+        if obj is not None:
             uid = obj.__class__.__name__ + '.' + obj.id
             FileStorage.__objects.pop(uid)
         else:
             pass
-
 
     def save(self):
         """Saves storage dictionary to file"""
@@ -53,10 +52,10 @@ class FileStorage:
         from models.review import Review
 
         classes = {
-                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
-                    'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review
-                  }
+            'BaseModel': BaseModel, 'User': User, 'Place': Place,
+            'State': State, 'City': City, 'Amenity': Amenity,
+            'Review': Review
+        }
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
@@ -66,6 +65,6 @@ class FileStorage:
                     pass
 
                 for key, val in temp.items():
-                        self.all()[key] = classes[val['__class__']](**val)
+                    self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass

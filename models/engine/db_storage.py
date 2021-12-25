@@ -45,25 +45,25 @@ class DBStorage:
 
     # mapped each models to a dict key
     models = {
-    'Amenity': amenity.Amenity,
-    'City': city.City,
-    'User': user.User,
-    'Place': place.Place,
-    'Review': review.Review,
-    'State': state.State
-}
+        'Amenity': amenity.Amenity,
+        'City': city.City,
+        'User': user.User,
+        'Place': place.Place,
+        'Review': review.Review,
+        'State': state.State
+    }
 
     def __init__(self):
         """instantiates engine
         """
 
         self.__engine = create_engine("mysql+mysqldb://{}:{}@{}:{}/{}".format(
-                                       env['mysql_user'],
-                                       env['mysql_passwd'],
-                                       env['mysql_host'],
-                                       env['mysql_port'],
-                                       env['mysql_db']),
-                                       pool_pre_ping=True)
+            env['mysql_user'],
+            env['mysql_passwd'],
+            env['mysql_host'],
+            env['mysql_port'],
+            env['mysql_db']),
+            pool_pre_ping=True)
 
         try:
             if env['environment'] == 'test':
@@ -75,7 +75,8 @@ class DBStorage:
         """retrieves all object instance
 
         Args:
-            cls ([class.BaseModel], optional): [BaseModel model]. Defaults to None.
+            cls ([class.BaseModel], optional): [BaseModel model].
+            Defaults to None.
 
         Returns:
             [dict]: Returns a dictionary of instances
@@ -106,7 +107,7 @@ class DBStorage:
         self.__session.add(obj)
 
     def save(self):
-        """commits the new objects to the current database session 
+        """commits the new objects to the current database session
         """
         try:
             # try commiting
@@ -119,12 +120,12 @@ class DBStorage:
             # end the database session
             self.__session.close()
 
-    
     def delete(self, obj=None):
         """deletes a table from the database
 
         Args:
-            obj (database table name, optional): [description]. Defaults to None.
+            obj (database table name, optional): [description].
+            Defaults to None.
         """
         if obj is None:
             return
@@ -132,8 +133,7 @@ class DBStorage:
         try:
             self.__session.delete(obj)
         except Exception:
-            raise 
-        
+            raise
 
     def reload(self):
         """reloads all a objects from the database
@@ -145,4 +145,5 @@ class DBStorage:
         State = self.models['State']
 
         Base.metadata.create_all(self.__engine)
-        self.__session = scoped_session(sessionmaker(bind=self.__engine, expire_on_commit=False))
+        self.__session = scoped_session(sessionmaker(
+            bind=self.__engine, expire_on_commit=False))
