@@ -35,9 +35,6 @@ def do_pack():
 def do_deploy(archive_path):
     """
     This distributes the archive to webservers
-
-        Args:
-            archive_path: This is the path to the archive .tgz file
     """
     try:
         if not os.path.exists(archive_path):
@@ -47,13 +44,15 @@ def do_deploy(archive_path):
             archive_no_ext = archive_name.split('.')[0]
             targetfolder = '/data/web_static/releases/'
             sym_path = '/data/web_static/current'
+            run('sudo mkdir -p {}'.format(targetfolder))
+            run('sudo chown -Rh ubuntu:ubuntu /data/')
             put(archive_path, '/tmp/{}'.format(archive_name))
             run('tar -xvf /tmp/{} -C {}'.format(archive_name, targetfolder))
             run('mv {}web_static {}{}'.format(
                 targetfolder, targetfolder, archive_no_ext))
             run('rm /tmp/{}'.format(archive_name))
             run('rm -rf {}'.format(sym_path))
-            run('ln -s {} {}'.format(targetfolder, sym_path))
+            run('ln -s {}{} {}'.format(targetfolder, archive_no_ext, sym_path))
             return True
     except BaseException as e:
         print(e)
@@ -65,7 +64,7 @@ def deploy():
     ./web_static into an archive .tgz file and deploying it to the
     webserver
     """
-    archive_path = do_pack()
-    if archive_path is None:
+    a_path = do_pack()
+    if a_path is None:
         return False
-    return do_deploy(archive_path)
+    return do_deploy(a_path)
