@@ -22,6 +22,8 @@ def do_deploy(archive_path):
             archive_no_ext = archive_name.split('.')[0]
             targetfolder = '/data/web_static/releases/'
             sym_path = '/data/web_static/current'
+            run('sudo mkdir -p {}'.format(targetfolder))
+            run('sudo chown -Rh ubuntu:ubuntu /data/')
             put(archive_path, '/tmp/{}'.format(archive_name))
             run('tar -xvf /tmp/{} -C {}'.format(archive_name, targetfolder))
             run('mv {}web_static {}{}'.format(
