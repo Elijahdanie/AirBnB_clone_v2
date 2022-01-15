@@ -11,6 +11,10 @@ from fabric.api import *
 
 
 def do_pack():
+    """
+    This packs files in ./web_static/ into a tar.tgz file
+    in ./versions/
+    """
     time_data = datetime.utcnow()
     ft = '{}{}{}{}{}{}'.format(
         time_data.year,
