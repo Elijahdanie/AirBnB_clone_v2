@@ -2,6 +2,7 @@
 """ Place Module for HBNB project """
 from sqlalchemy.sql.schema import Column, ForeignKey
 from sqlalchemy.sql.sqltypes import String, Integer, Float
+from sqlalchemy.sql.schema import Table
 from models.base_model import BaseModel, Base
 from os import getenv
 
@@ -21,6 +22,13 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
+        place_amenity = Table('place_amenity', Base.metadata,
+                            Column('place_id', String(60),
+                            ForeignKey('places.id'),
+                            primary_key=True, nullable=False),
+                            Column('amenity_id', String(60),
+                            ForeignKey('amenities.id'),
+                            primary_key=True, nullable=False))
     else:
         city_id = ''
         user_id = ''
