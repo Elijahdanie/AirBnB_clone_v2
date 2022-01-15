@@ -25,12 +25,14 @@ def do_deploy(archive_path):
             run('sudo mkdir -p {}'.format(targetfolder))
             run('sudo chown -Rh ubuntu:ubuntu /data/')
             put(archive_path, '/tmp/{}'.format(archive_name))
-            run('tar -xvf /tmp/{} -C {}'.format(archive_name, targetfolder))
+            run('tar -xvf /tmp/{} -C {}'.format(
+                archive_name, targetfolder))
             run('mv {}web_static {}{}'.format(
                 targetfolder, targetfolder, archive_no_ext))
             run('rm /tmp/{}'.format(archive_name))
             run('rm -rf {}'.format(sym_path))
-            run('ln -sf {}{} {}'.format(targetfolder, archive_no_ext, sym_path))
+            run('ln -sf {}{} {}'.format(
+                targetfolder, archive_no_ext, sym_path))
             return True
     except BaseException as e:
         print(e)
