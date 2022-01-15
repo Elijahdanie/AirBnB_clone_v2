@@ -28,7 +28,7 @@ def do_deploy(archive_path):
                 targetfolder, targetfolder, archive_no_ext))
             run('rm /tmp/{}'.format(archive_name))
             run('rm -rf {}'.format(sym_path))
-            run('ln -s {} {}'.format(targetfolder, sym_path))
+            run('ln -s {}{} {}'.format(targetfolder, archive_no_ext, sym_path))
             return True
     except BaseException as e:
         print(e)
