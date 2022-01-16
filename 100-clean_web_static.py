@@ -23,9 +23,11 @@ def do_clean(number=0):
     list_dir.sort()
     dir_len = len(list_dir)
 
-    iteration = dir_len - ftp
-    if iteration <= 0:
-        return
+    equals = dir_len == ftp
+    if not equals:
+        iteration = dir_len - ftp
+    elif equals:
+        iteration = dir_len - 1
     
     for dir_index in range(iteration):
         local('rm -r ./versions/{}'.format(list_dir[dir_index]))
