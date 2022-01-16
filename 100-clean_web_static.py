@@ -28,5 +28,5 @@ def do_clean(number=0):
     
     "clean remotely"
     r_dir_list = run('ls -tr {}'.format(remote_dir))
-    for ri in range(number):
+    for ri in range(iteration):
         run('rm -r {}{}'.format(r_dir_list[ri]))
