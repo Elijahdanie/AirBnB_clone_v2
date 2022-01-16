@@ -16,12 +16,17 @@ def do_clean(number=0):
             number of archives to keep
     """
 
-    iteration = 1 if number == 0 else number
+    ftp = 1 if number == 0 else number
     remote_dir = '/data/web_static/releases/'
 
     list_dir = os.listdir('versions')
     list_dir.sort()
     dir_len = len(list_dir)
+
+    iteration = dir_len - ftp
+    if iteration <= 0:
+        return
+    
     for dir_index in range(iteration):
         local('rm -r ./versions/{}'.format(list_dir[dir_index]))
     
