@@ -21,14 +21,20 @@ def do_clean(number=0):
 
     list_dir = os.listdir('versions')
     list_dir.sort()
-    dir_len = len(list_dir)
+    num_archives = len(list_dir)
 
-    equals = dir_len == ftp
-    if not equals:
-        iteration = dir_len - ftp
-    elif equals:
-        iteration = dir_len - 1
-    
+    isequal = num_archives == ftp
+    iszero = isequal and num_archives < 2
+    isgreater = num_archives > ftp
+
+    if isgreater:
+        iteration = num_archives - ftp
+    elif isequal and not iszero:
+        iteration = num_archives - 1
+    elif iszero or not isgreater:
+        return
+
+
     for dir_index in range(iteration):
         local('rm -r ./versions/{}'.format(list_dir[dir_index]))
     
