@@ -69,7 +69,7 @@ def number_template(n):
     this script returns an html page
     with the number n
     """
-    return render_template('5-number.html', **{'n':n})
+    return render_template('5-number.html', n=n)
 
 
 if __name__ == '__main__':
