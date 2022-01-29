@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
+from imp import reload
 import json
 from json.decoder import JSONDecodeError
 
@@ -40,6 +41,12 @@ class FileStorage:
 
         with open(FileStorage.__file_path, mode="w", encoding="utf-8") as fd:
             fd.write(json.dumps(store))
+
+    def close(self):
+        """
+        This invokes the reload method
+        """
+        self.reload()
 
     def reload(self):
         """Loads storage dictionary from file"""
