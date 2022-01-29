@@ -37,6 +37,10 @@ def display_c(text):
 
 @app.route('/python', strict_slashes=False)
 def python_route_null():
+    """
+    this returns a default value for
+    the request /python or /python/
+    """
     return 'Python is cool'
 
 
@@ -61,6 +65,10 @@ def number_route(n):
 
 @app.route('/number_template/<int:n>', strict_slashes=False)
 def number_template(n):
+    """
+    this script returns an html page
+    with the number n
+    """
     return render_template('5-number.html', n=n)
 
 
