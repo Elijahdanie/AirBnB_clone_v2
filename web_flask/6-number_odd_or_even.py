@@ -73,7 +73,7 @@ def number_template(n):
 def number_odd_or_even(n):
     """
     This returns an html page
-    displaying the message 
+    displaying the message
     Number: n is odd or Number: n is even
     """
     return render_template('6-number_odd_or_even.html', n=n)
