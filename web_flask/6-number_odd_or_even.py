@@ -62,11 +62,20 @@ def number_route(n):
 
 @app.route('/number_template/<int:n>', strict_slashes=False)
 def number_template(n):
+    """
+    this script returns an html page
+    with the number n
+    """
     return render_template('5-number.html', n=n)
 
 
 @app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
 def number_odd_or_even(n):
+    """
+    This returns an html page
+    displaying the message 
+    Number: n is odd or Number: n is even
+    """
     return render_template('6-number_odd_or_even.html', n=n)
 
 
