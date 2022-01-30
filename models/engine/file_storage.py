@@ -16,6 +16,7 @@ classes = {
     'Review': Review
 }
 
+
 class FileStorage:
     """manages storage of hbnb models in JSON format"""
     __file_path = 'file.json'

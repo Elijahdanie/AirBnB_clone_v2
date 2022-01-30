@@ -42,12 +42,10 @@ class BaseModel:
             if not hasattr(kwargs, 'id'):
                 setattr(self, 'id', str(uuid.uuid4()))
 
-
     def __str__(self):
         """Returns a string representation of the instance"""
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
         return '[{}] ({}) {}'.format(cls, self.id, self.__dict__)
-
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""
@@ -55,7 +53,6 @@ class BaseModel:
         self.updated_at = datetime.now()
         storage.new(self)
         storage.save()
-
 
     def to_dict(self):
         """creates dictionary of the class  and returns
@@ -69,7 +66,6 @@ class BaseModel:
         if '_sa_instance_state' in my_dict.keys():
             del my_dict['_sa_instance_state']
         return my_dict
-
 
     def delete(self):
         from models import storage
