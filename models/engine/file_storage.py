@@ -28,7 +28,7 @@ class FileStorage:
         else:
             final_list = {}
             for key, val in FileStorage.__objects.items():
-                if val.__class__.__name__ == cls.__name__:
+                if type(val) is cls:
                     final_list[key] = val
             return final_list
 
