@@ -92,7 +92,7 @@ class DBStorage:
 
         else:
             # fetch all object instances instead
-            for cls_name in self.models.keys():
+            for cls_name in self.models.values():
                 for instance in self.__session.query(cls_name).all():
                     objects[instance.id] = instance
 

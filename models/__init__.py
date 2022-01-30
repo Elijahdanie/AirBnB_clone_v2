@@ -1,12 +1,9 @@
 #!/usr/bin/python3
 """This module instantiates an object of class FileStorage"""
 import os
-try:
-    from decouple import config as get_env
-except ImportError:
-    get_env = os.environ.get
+from os import getenv
 
-if get_env('HBNB_TYPE_STORAGE') == 'db':
+if getenv('HBNB_TYPE_STORAGE') == 'db':
     from models.engine.db_storage import DBStorage
     storage = DBStorage()
 else:
