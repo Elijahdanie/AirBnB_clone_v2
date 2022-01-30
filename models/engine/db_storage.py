@@ -85,7 +85,7 @@ class DBStorage:
 
         if cls is not None:
             # fetch a specific object instance
-            if cls not in self.models.keys():
+            if cls not in self.models.values():
                 return
             for instance in self.__session.query(cls).all():
                 objects[instance.id] = instance
