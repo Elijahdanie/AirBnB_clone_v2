@@ -2,7 +2,7 @@
 """
 database storage engine
 """
-import os
+
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.scoping import scoped_session
 from sqlalchemy import create_engine
@@ -16,22 +16,18 @@ from models import (
 )
 from models.base_model import Base
 
-# try to import config if available
-try:
-    from decouple import config as get_env
-except ImportError:
-    get_env = os.environ.get
+import os
 
 # environs and options
 env = {
     # environment settings to use
-    'environment': get_env('HBNB_ENV'),
+    'environment': os.getenv('HBNB_ENV'),
 
     # db connections
-    'mysql_user': get_env('HBNB_MYSQL_USER'),
-    'mysql_passwd': get_env('HBNB_MYSQL_PWD'),
-    'mysql_host': get_env('HBNB_MYSQL_HOST'),
-    'mysql_db': get_env('HBNB_MYSQL_DB'),
+    'mysql_user': os.getenv('HBNB_MYSQL_USER'),
+    'mysql_passwd': os.getenv('HBNB_MYSQL_PWD'),
+    'mysql_host': os.getenv('HBNB_MYSQL_HOST'),
+    'mysql_db': os.getenv('HBNB_MYSQL_DB'),
     'mysql_port': 3306,
 }
 
