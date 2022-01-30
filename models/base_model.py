@@ -27,20 +27,20 @@ class BaseModel:
         """initializes the basemodel class"""
         if (not kwargs):
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.utcnow()
             self.updated_at = self.created_at
+            self.created_at = datetime.utcnow()
         elif kwargs:
             for key, value in kwargs.items():
                 if key != '__class__':
                     if key in ['created_at', 'updated_at']:
                         value = datetime.strptime(value, BaseModel.TIME_FORMAT)
                     setattr(self, key, value)
-            if not hasattr(kwargs, 'created_at'):
-                setattr(self, 'created_at', datetime.utcnow())
-            if not hasattr(kwargs, 'updated_at'):
-                setattr(self, 'updated_at', datetime.utcnow())
             if not hasattr(kwargs, 'id'):
                 setattr(self, 'id', str(uuid.uuid4()))
+            if not hasattr(kwargs, 'updated_at'):
+                setattr(self, 'updated_at', datetime.utcnow())
+            if not hasattr(kwargs, 'created_at'):
+                setattr(self, 'created_at', datetime.utcnow())
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -66,8 +66,8 @@ class BaseModel:
         if '_sa_instance_state' in my_dict.keys():
             del my_dict['_sa_instance_state']
         my_dict["__class__"] = str(type(self).__name__)
-        my_dict["created_at"] = self.created_at.isoformat()
         my_dict["updated_at"] = self.updated_at.isoformat()
+        my_dict["created_at"] = self.created_at.isoformat()
         return my_dict
 
     def delete(self):
