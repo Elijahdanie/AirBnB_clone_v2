@@ -21,6 +21,7 @@ class BaseModel:
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
     updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
 
+    TIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
 
     def __init__(self, *args, **kwargs):
         """initializes the basemodel class"""
@@ -32,7 +33,7 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key != '__class__':
                     if key in ['created_at', 'updated_at']:
-                        value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                        value = datetime.strptime(value, BaseModel.TIME_FORMAT)
                     setattr(self, key, value)
             if not hasattr(kwargs, 'created_at'):
                 setattr(self, 'created_at', datetime.utcnow())
@@ -57,14 +58,17 @@ class BaseModel:
 
 
     def to_dict(self):
-        """Convert instance into dict format"""
-        dupe = self.__dict__.copy()
-        dupe["created_at"] = str(dupe["created_at"])
-        dupe["updated_at"] = str(dupe["updated_at"])
-        dupe["__class__"] = type(self).__name__
-        if ("_sa_instance_state" in dupe):
-            dupe.pop("_sa_instance_state", 0)
-        return dupe
+        """creates dictionary of the class  and returns
+        Return:
+            returns a dictionary of all the key values in __dict__
+        """
+        my_dict = dict(self.__dict__)
+        my_dict["__class__"] = str(type(self).__name__)
+        my_dict["created_at"] = self.created_at.isoformat()
+        my_dict["updated_at"] = self.updated_at.isoformat()
+        if '_sa_instance_state' in my_dict.keys():
+            del my_dict['_sa_instance_state']
+        return my_dict
 
 
     def delete(self):
