@@ -30,7 +30,8 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
         else:
-            del kwargs['__class__']
+            if '__class__' in kwargs.keys():
+                del kwargs['__class__']
             for k, v in kwargs.items():
                 setattr(self, k, v)
 
