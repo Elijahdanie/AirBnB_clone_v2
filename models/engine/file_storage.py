@@ -60,10 +60,15 @@ class FileStorage:
 
     def reload(self):
         """Loads storage dictionary from file"""
-        with open(self.__file_path, 'r') as f:
-            try:
-                temp = json.load(f)
+        try:
+            temp = {}
+            with open(self.__file_path, 'r') as f:
+                try:
+                    temp = json.load(f)
+                except FileNotFoundError:
+                    pass
+
                 for key, val in temp.items():
                     self.all()[key] = classes[val['__class__']](**val)
-            except FileNotFoundError:
-                pass
+        except BaseException:
+            pass
