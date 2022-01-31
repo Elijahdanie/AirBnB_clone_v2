@@ -61,11 +61,8 @@ class DBStorage:
             env['mysql_db']),
             pool_pre_ping=True)
 
-        try:
-            if env['environment'] == 'test':
-                Base.metadata.drop_all(self.__engine)
-        except KeyError:
-            pass
+        if os.getenv('HBNB_ENV') == 'test':
+            Base.metadata.drop_all(bind=self.__engine)
 
     def all(self, cls=None):
         """retrieves all object instance
