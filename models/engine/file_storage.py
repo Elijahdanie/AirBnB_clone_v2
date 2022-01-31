@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
-from json.decoder import JSONDecodeError
 from models.base_model import BaseModel
 from models.user import User
 from models.place import Place
@@ -66,10 +65,10 @@ class FileStorage:
             with open(self.__file_path, 'r') as f:
                 try:
                     temp = json.load(f)
-                except JSONDecodeError:
+                except:
                     pass
 
                 for key, val in temp.items():
                     self.all()[key] = classes[val['__class__']](**val)
-        except FileNotFoundError:
+        except:
             pass

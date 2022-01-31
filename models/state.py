@@ -26,13 +26,11 @@ class State(BaseModel, Base):
             "City", backref="state", cascade="all, delete, delete-orphan")
     else:
         name = ''
-
-    if getenv('HBNB_TYPE_STORAGE', '') != 'db':
         @property
         def cities(self):
-            all_cities = models.storage.all(City)
+            all_cities = list(models.storage.all(City).values())
             city_list = []
-            for city in list(models.storage.all(City).values()):
+            for city in all_cities:
                 if city.state_id == self.id:
                     city_list.append(city)
             return city_list
