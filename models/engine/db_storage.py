@@ -16,20 +16,7 @@ from models import (
 )
 from models.base_model import Base
 
-import os
-
-# environs and options
-env = {
-    # environment settings to use
-    'environment': os.getenv('HBNB_ENV'),
-
-    # db connections
-    'mysql_user': os.getenv('HBNB_MYSQL_USER'),
-    'mysql_passwd': os.getenv('HBNB_MYSQL_PWD'),
-    'mysql_host': os.getenv('HBNB_MYSQL_HOST'),
-    'mysql_db': os.getenv('HBNB_MYSQL_DB'),
-    'mysql_port': 3306,
-}
+from os import getenv
 
 
 # class definition starts here
@@ -53,15 +40,13 @@ class DBStorage:
         """instantiates engine
         """
 
-        self.__engine = create_engine("mysql+mysqldb://{}:{}@{}:{}/{}".format(
-            env['mysql_user'],
-            env['mysql_passwd'],
-            env['mysql_host'],
-            env['mysql_port'],
-            env['mysql_db']),
-            pool_pre_ping=True)
-
-        if os.getenv('HBNB_ENV') == 'test':
+        self.__engine = create_engine("mysql+mysqldb://{}:{}@{}:{}/{}"
+            .format(getenv('HBNB_MYSQL_USER'),
+                                              getenv('HBNB_MYSQL_PWD'),
+                                              getenv('HBNB_MYSQL_HOST'),
+                                              getenv('HBNB_MYSQL_DB')),
+                                      pool_pre_ping=True)
+        if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(bind=self.__engine)
 
     def all(self, cls=None):
@@ -102,16 +87,7 @@ class DBStorage:
     def save(self):
         """commits the new objects to the current database session
         """
-        try:
-            # try commiting
-            self.__session.commit()
-        except Exception:
-            # if an exception occurs rollback the commit
-            self.__session.rollback()
-            raise
-        finally:
-            # end the database session
-            self.__session.close()
+        self.__session.commit()
 
     def delete(self, obj=None):
         """deletes a table from the database
