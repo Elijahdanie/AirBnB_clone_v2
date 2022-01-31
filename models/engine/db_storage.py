@@ -38,6 +38,7 @@ class DBStorage:
     """
     __engine = None
     __session = None
+    session_maker = None
 
     # mapped each models to a dict key
     models = {
@@ -138,11 +139,13 @@ class DBStorage:
         State = self.models['State']
 
         Base.metadata.create_all(self.__engine)
-        self.__session = scoped_session(sessionmaker(
-            bind=self.__engine, expire_on_commit=False))()
+        self.session_maker = sessionmaker(
+            bind=self.__engine, expire_on_commit=False)
+        self.__session = scoped_session(self.session_maker)
 
     def close(self):
         """
         Closes the SQLAlchemy session
         """
         self.__session.close()
+        self.reload()
