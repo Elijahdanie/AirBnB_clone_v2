@@ -26,6 +26,7 @@ class State(BaseModel, Base):
             "City", backref="state", cascade="all, delete, delete-orphan")
     else:
         name = ''
+
         @property
         def cities(self):
             all_cities = list(models.storage.all(City).values())
