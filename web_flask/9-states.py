@@ -45,7 +45,11 @@ def statesid(id):
     This returns a state Object
     rendered html page
     """
-    stateObject = storage.all(State)[id]
+    allstate = storage.all(State)
+    if id in allstate.keys():
+        stateObject=allstate[id]
+    else:
+        stateObject=None
     return render_template('9-states.html', state=stateObject)
 
 
