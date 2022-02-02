@@ -28,7 +28,7 @@ def cities_by_states():
     list of cities by states
     """
     state = storage.all(State).values()
-    return render_template('./templates/8-cities_by_states.html', states=state)
+    return render_template('8-cities_by_states.html', states=state)
 
 @app.teardown_appcontext
 def teardown(self):
