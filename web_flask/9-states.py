@@ -47,9 +47,9 @@ def statesid(id):
     """
     allstate = storage.all(State)
     if id in allstate.keys():
-        stateObject=allstate[id]
+        stateObject = allstate[id]
     else:
-        stateObject='None'
+        stateObject = 'None'
     return render_template('9-states.html', state=stateObject)
 
 
