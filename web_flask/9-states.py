@@ -36,15 +36,15 @@ def states():
     """
     this returns a list of states
     """
-    list_states()
+    return list_states()
 
 @app.route('/states/<id>', strict_slashes=False)
-def statesid(stateid):
+def statesid(id):
     """
     This returns a state Object
     rendered html page
     """
-    stateObject = storage.all(State)[stateid]
+    stateObject = storage.all(State)[id]
     return render_template('9-states.html', state=stateObject)
 
 
