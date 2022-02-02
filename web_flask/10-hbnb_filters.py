@@ -68,7 +68,7 @@ def hbnb_filters():
     states = storage.all(State).values()
     amenities = storage.all(Amenity).values()
     data_dict = {'states':states, 'amenities':amenities}
-    return render_template('10-hbnb_filters.html', data_dict)
+    return render_template('10-hbnb_filters.html', **data_dict)
 
 
 if __name__ == '__main__':
