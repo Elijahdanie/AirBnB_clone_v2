@@ -31,6 +31,16 @@ def cities_by_states():
     return render_template('8-cities_by_states.html', states=state)
 
 
+@app.route('/states/<id>', strict_slashes=False)
+def states(stateid):
+    """
+    This returns a state Object
+    rendered html page
+    """
+    stateObject = storage.all(State)[stateid]
+    return render_template('9-states.html', state=stateObject)
+
+
 @app.teardown_appcontext
 def teardown(self):
     """Closes the current Sqlalchemy session"""
