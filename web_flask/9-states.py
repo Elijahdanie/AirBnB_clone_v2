@@ -31,8 +31,15 @@ def cities_by_states():
     return render_template('8-cities_by_states.html', states=state)
 
 
+@app.route('/states', strict_slashes=False)
+def states():
+    """
+    this returns a list of states
+    """
+    list_states()
+
 @app.route('/states/<id>', strict_slashes=False)
-def states(stateid):
+def statesid(stateid):
     """
     This returns a state Object
     rendered html page
