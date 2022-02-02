@@ -38,6 +38,7 @@ def states():
     """
     return list_states()
 
+
 @app.route('/states/<id>', strict_slashes=False)
 def statesid(id):
     """
