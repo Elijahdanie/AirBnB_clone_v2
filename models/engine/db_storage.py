@@ -147,4 +147,4 @@ class DBStorage:
         """
         Closes the SQLAlchemy session
         """
-        self.__session.close()
+        self.__session.remove()
